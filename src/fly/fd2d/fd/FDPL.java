@@ -21,13 +21,11 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class FDPL implements Listener {
-    private WorldGuardPlugin worldGuard;
     private final FD plugin;
-
+    private WorldGuardPlugin worldGuard;
     public FDPL(FD instance) {
         plugin = instance;
     }
-
     private static final Logger log = Logger.getLogger("Minecraft");
 
     @EventHandler
@@ -39,53 +37,49 @@ public class FDPL implements Listener {
                 ItemStack iih = player.getItemInHand();
                 String name = iih.getType().name();
                 short idur = iih.getDurability();
-                String rid = plugin.getConfig().getString(
-                        name.toLowerCase() + idur + ".Region");
-                String cmd = plugin.getConfig().getString(
-                        name.toLowerCase() + idur + ".Command");
-                World world = player.getWorld();
-                PluginManager pm = Bukkit.getServer().getPluginManager();
-                if (pm.getPlugin("WorldGuard") != null) {
-                    this.worldGuard = ((WorldGuardPlugin) Bukkit.getServer()
-                            .getPluginManager().getPlugin("WorldGuard"));
-                }
-                RegionManager regionManager = this.worldGuard
-                        .getRegionManager(world);
-                ProtectedRegion region = regionManager.getRegion(rid);
-                LocalPlayer localPlayer = this.worldGuard.wrapPlayer(player);
-                if (regionManager.getRegion(rid) != null) {
-                    if (region.isOwner(localPlayer)) {
-                        player.performCommand(cmd);
-                        event.setCancelled(true);
-                    } else {
-                        region.setOwners(new DefaultDomain());
-                        region.getOwners().addPlayer(
-                                this.worldGuard.wrapPlayer(player));
-                        try {
-                            regionManager.save();
-                        } catch (IOException e) {
-                            log.info("[FlydeViCe] WorldGuard Error [" + e
-                                    + "] during Region File Save");
-                        }
-                        String stext = player.getName()
-                                + " is the new owner of " + rid + "!";
-                        plugin.getServer().broadcastMessage(
-                                ChatColor.DARK_RED + "[" + ChatColor.GOLD + rid
-                                        + ChatColor.DARK_RED + "]: "
-                                        + ChatColor.GOLD + stext);
-                        // player.sendMessage(ChatColor.YELLOW +
-                        // player.getName()
-                        // + " is tHe new owner of " + rid + "!");
-                        event.setCancelled(true);
-                    }
-                } else {
-                    event.setCancelled(false);
-                }
+                regOwn(player, event, name, idur);
             } else {
                 event.setCancelled(false);
             }
         } catch (NullPointerException e) {
             return;
+        }
+    }
+    
+// Change The Regions Owner!
+    private void regOwn(Player player, PlayerInteractEvent event, String name, short idur) {
+        String rrid = plugin.getConfig().getString("Regions." + name.toLowerCase() + idur + ".Region");
+        String rcmd = plugin.getConfig().getString("Regions." + name.toLowerCase() + idur + ".Command");
+        World world = player.getWorld();
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+
+        if (pm.getPlugin("WorldGuard") != null) {
+            this.worldGuard = ((WorldGuardPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldGuard"));
+        }
+        RegionManager regionManager = this.worldGuard.getRegionManager(world);
+        ProtectedRegion region = regionManager.getRegion(rrid);
+        LocalPlayer localPlayer = this.worldGuard.wrapPlayer(player);
+
+
+        if (regionManager.getRegion(rrid) != null) {
+            if (region.isOwner(localPlayer)) {
+                player.performCommand(rcmd);
+                event.setCancelled(true);
+            } else {
+                region.setOwners(new DefaultDomain());
+                region.getOwners().addPlayer(
+                        this.worldGuard.wrapPlayer(player));
+                try {
+                    regionManager.save();
+                } catch (IOException e) {
+                    log.info("[FlydeViCe] WorldGuard Error [" + e + "] during Region File Save");
+                }
+                String stext = player.getName() + " is the new owner of " + rrid + "!";
+                plugin.getServer().broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.GOLD + rrid + ChatColor.DARK_RED + "]: " + ChatColor.GOLD + stext);
+                event.setCancelled(true);
+            }
+        } else {
+            event.setCancelled(false);
         }
     }
 }
