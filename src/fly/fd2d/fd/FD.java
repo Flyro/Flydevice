@@ -15,18 +15,29 @@ public class FD extends JavaPlugin {
 	
 	public void onEnable() {		
 		log.info("[Flydevice] Version " + this.getDescription().getVersion() + " has been enabled!");
-        //regions
+		
+        //strings
+		String typeRegi = "owner";
+		String Lv = "deny";
+		String Rv = "allow";
+		String typeFlag = "flag";
 		String itemname = "itemid";
 		String region = "region-id";
 		String command = "regions info " + region;
+	    String flag = "flagtype";
+	    
+		//regions
 		this.getConfig().set("Regions.itemid", itemname);
+	    this.getConfig().set("Regions.itemid.Type", typeRegi);
 		this.getConfig().set("Regions.itemid.Region", region);
 		this.getConfig().set("Regions.itemid.Command", command);
+		
 		//flags
-	    String flag = "region flag " + region + " flagtype value";
-	    this.getConfig().set("Flags.itemid", itemname);
-	    this.getConfig().set("Flags.itemid.Region", region);
-	    this.getConfig().set("Flags.itemid.Command", flag);
+	    this.getConfig().set("Regions.itemid2", itemname);
+	    this.getConfig().set("Regions.itemid2.Type", typeFlag);
+	    this.getConfig().set("Regions.itemid2.Flag", flag);
+	    this.getConfig().set("Regions.itemid2.Lclcvalue", Lv);
+	    this.getConfig().set("Regions.itemid2.Rclcvalue", Rv);
 		this.saveConfig();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.playerListener, this);
