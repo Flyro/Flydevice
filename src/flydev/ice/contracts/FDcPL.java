@@ -1,4 +1,4 @@
-package fly.fd2d.fd;
+package flydev.ice.contracts;
 
 import java.util.logging.Logger;
 
@@ -21,10 +21,10 @@ import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
-public class FDPL implements Listener {
-    private final FD plugin;
+public class FDcPL implements Listener {
+    private final FDc plugin;
     private WorldGuardPlugin worldGuard;
-    public FDPL(FD instance) {
+    public FDcPL(FDc instance) {
         plugin = instance;
     }
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -139,7 +139,7 @@ public class FDPL implements Listener {
                 } else {
                     player.performCommand(doCommand);
                 }
-                player.sendMessage (ChatColor.DARK_RED + "[" + ChatColor.GOLD + fcmd + ChatColor.DARK_RED + "] value: " + ChatColor.GOLD + flagFv);
+                player.sendMessage(ChatColor.GOLD + regId + "" + fcmd + ": " + flagFv);
                 event.setCancelled(true);
             } else {
                 player.sendMessage (ChatColor.DARK_RED + "[" + ChatColor.GOLD + "Fail" + ChatColor.DARK_RED + "]: " + regId + " does not belong to you!");
@@ -150,4 +150,22 @@ public class FDPL implements Listener {
             event.setCancelled(true);
         }
     }
+    /*    private void fpvpd(ProtectedRegion region) {region.setFlag(DefaultFlag.MOB_DAMAGE, StateFlag.State.DENY);}
+    private void fpvpa(ProtectedRegion region) {region.setFlag(DefaultFlag.MOB_DAMAGE, StateFlag.State.ALLOW);} 
+    private void fmobdmgd(ProtectedRegion region) {region.setFlag(DefaultFlag.MOB_DAMAGE, StateFlag.State.DENY);}
+    private void fmobspwnd(ProtectedRegion region) {region.setFlag(DefaultFlag.MOB_SPAWNING, StateFlag.State.DENY);}
+    private void fcreexpd(ProtectedRegion region) {region.setFlag(DefaultFlag.CREEPER_EXPLOSION, StateFlag.State.DENY);}
+    private void fendbuid(ProtectedRegion region) {region.setFlag(DefaultFlag.ENDER_BUILD, StateFlag.State.DENY);}
+    private void fghafird(ProtectedRegion region) {region.setFlag(DefaultFlag.GHAST_FIREBALL, StateFlag.State.DENY);}
+    private void ftntd(ProtectedRegion region) {region.setFlag(DefaultFlag.TNT, StateFlag.State.DENY);}
+    private void flavflod(ProtectedRegion region) {region.setFlag(DefaultFlag.LAVA_FLOW, StateFlag.State.DENY);}
+    private void fsnofald(ProtectedRegion region) {region.setFlag(DefaultFlag.SNOW_FALL, StateFlag.State.DENY);}
+    private void fmobdmga(ProtectedRegion region) {region.setFlag(DefaultFlag.MOB_DAMAGE, StateFlag.State.ALLOW);}
+    private void fmobspwna(ProtectedRegion region) {region.setFlag(DefaultFlag.MOB_SPAWNING, StateFlag.State.ALLOW);}
+    private void fcreexpa(ProtectedRegion region) {region.setFlag(DefaultFlag.CREEPER_EXPLOSION, StateFlag.State.ALLOW);}
+    private void fendbuia(ProtectedRegion region) {region.setFlag(DefaultFlag.ENDER_BUILD, StateFlag.State.ALLOW);}
+    private void fghafira(ProtectedRegion region) {region.setFlag(DefaultFlag.GHAST_FIREBALL, StateFlag.State.ALLOW);}
+    private void ftnta(ProtectedRegion region) {region.setFlag(DefaultFlag.TNT, StateFlag.State.ALLOW);}
+    private void flavfloa(ProtectedRegion region) {region.setFlag(DefaultFlag.LAVA_FLOW, StateFlag.State.ALLOW);}
+    private void fsnofala(ProtectedRegion region) {region.setFlag(DefaultFlag.SNOW_FALL, StateFlag.State.ALLOW);}*/
 }

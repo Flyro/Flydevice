@@ -1,4 +1,8 @@
-name: Flydevice
-main: fly.fd2d.fd.FD
+name: FlydeviceContracts
+main: flydev.ice.contracts.FDc
 author: Flyro
-version: 1.0.0
+version: 1.1.0
+commands:
+  fdc:
+    Description: Flydevice Commands!
+    Usage: /fdc <add/reload> 

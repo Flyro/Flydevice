@@ -1,0 +1,25 @@
+# default config.yml
+# 
+# Example:
+#
+# Regions:
+#   map0:
+#     Type: owner
+#     Region: test
+#     Command: regions info test
+#   map1:
+#     Type: flag
+#     Flag: pvp
+#     Lclcvalue: allow
+#     Rclcvalue: deny
+
+Regions:
+  itemid:
+    Type: owner
+    Region: region-id
+    Command: regions info region-id
+  itemid2:
+    Type: flag
+    Flag: flagtype
+    Lclcvalue: deny
+    Rclcvalue: allow
